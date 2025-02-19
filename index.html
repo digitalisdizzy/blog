@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/blog/main.css">
+    <link rel="stylesheet" href="stylesheet.css">
+    <title>Blog | digitalisdizzy</title>
+</head>
+<body>
+    <h1 class="text-center">Blog</h1>
+
+    <br><br>
+
+    <p class="text-center"><b>Welcome to my blog!</b> I'll just post some stuff mainly about game dev on Roblox but also some other stuff.</p>
+
+    <br><br>
+
+    <h2 class="text-center">Posts</h2>
+
+    <div id="posts">
+        
+    </div>
+
+    <script type="module">
+
+        import YAML from 'https://cdn.jsdelivr.net/npm/yaml@2.7/browser/index.js'
+        window.YAML = YAML
+
+        function extractFrontMatter(content) {
+            const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
+            if (!match) {
+                return { frontMatter: null, body: content.trim() };
+            }
+
+            return {
+                frontMatter: YAML.parse(match[1]),
+                body: match[2].trim()
+            };
+        }
+
+        function showError(e){
+            document.getElementById("posts").innerHTML += `<div class="text-center">
+            <h3><b>Error getting posts</b></h3>
+            <i>${e}</i></div class="text-center">`
+        }
+
+        fetch("https://api.github.com/repos/digitalisdizzy/blog/git/trees/main?recursive=1").then(r => r.json().then(data => {
+            const posts = data.tree.filter(item => !item.path.includes("/") && item.path.endsWith(".md")).sort().reverse()
+
+            posts.forEach(item => {
+                fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${item.path}`).then(r2 => r2.text().then(raw => {
+                    const post = extractFrontMatter(raw)
+
+                    const el = `<a class="post" href="/blog-test/${item.path.split(".")[0]}">
+            <h1>${post.frontMatter.title || item.path.split(".")[0]}</h1>
+            <p>${post.body}</p>
+        </a>`
+
+                    document.getElementById("posts").innerHTML += el
+                })).catch(showError)
+            });
+        })).catch(showError)
+    </script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+@import url('https://place1.dev/reset.css');
+
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Code+Latin:wght@100..700&display=swap');
+
+:root {
+    --text: #ffffff;
+    --background: #1d1d1d;
+    --primary: #4893ef;
+    --secondary: #355bad;
+    --accent: #1579eb;
+    --font: 'M PLUS Code Latin';
+    --page-margin: 20%;
+
+    font-family: var(--font);
+    color: var(--text);
+}
+
+body {
+    background-color: var(--background);
+    margin-left: var(--page-margin);
+    margin-right: var(--page-margin);
+}
+
+.text-center {
+    text-align: center;
+}
+
+h1 {
+    font-size: 4em;
+}
+h2 {
+    font-size: 2.5em;
+}
+
+button, a {
+    cursor: pointer;
+}
+
+img {
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -19,14 +19,7 @@ body {
     background-color: var(--background);
     margin-left: var(--page-margin);
     margin-right: var(--page-margin);
-}
-
-body:first-child {
-    margin-top: 50px;
-}
-
-body:last-child {
-    margin-bottom: 50px;
+    padding: 50px 0;
 }
 
 body::after {

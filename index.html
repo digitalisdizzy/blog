@@ -52,7 +52,7 @@
                 fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${item.path}`).then(r2 => r2.text().then(raw => {
                     const post = extractFrontMatter(raw)
 
-                    const el = `<a class="post" href="/blog-test/${item.path.split(".")[0]}">
+                    const el = `<a class="post" href="/blog/${item.path.split(".")[0]}">
             <h1>${post.frontMatter.title || item.path.split(".")[0]}</h1>
             <p>${post.body}</p>
         </a>`

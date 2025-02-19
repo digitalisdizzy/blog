@@ -16,10 +16,27 @@
 }
 
 body {
+    padding-top: 50px;
+    padding-bottom: 50px;
     background-color: var(--background);
     margin-left: var(--page-margin);
     margin-right: var(--page-margin);
 }
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/baseplate-texture.png');
+    background-repeat: repeat;
+    background-size: 100px;
+    opacity: 0.02;
+    pointer-events: none;
+}
+
 
 .text-center {
     text-align: center;

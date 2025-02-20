@@ -59,7 +59,7 @@
         }
 
         fetch("https://api.github.com/repos/digitalisdizzy/blog/git/trees/main?recursive=1").then(r => r.json().then(data => {
-            const posts = data.tree.filter(item => !item.path.includes("/") && item.path.endsWith(".md")).sort().reverse()
+            const posts = data.tree.filter(item => !item.path.includes("/") && item.path.endsWith(".md")).sort((a, b) => b.path.localeCompare(a.path))
 
             posts.forEach(item => {
                 fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${item.path}`).then(r2 => r2.text().then(raw => {

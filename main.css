@@ -60,3 +60,9 @@ img {
 .utterances {
     max-width: none !important;
 }
+
+@media (max-width: 768px) {
+    body {
+      margin: 10px; /* Smaller margin for mobile screens */
+    }
+}

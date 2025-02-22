@@ -49,11 +49,11 @@ body::after {
     text-align: center;
 }
 
-h1,h2 {
+h1:not(.no-margin),h2:not(.no-margin) {
     margin-top: 50px;
 }
 
-h3,h4,h5,h6 {
+h3:not(.no-margin),h4:not(.no-margin),h5:not(.no-margin),h6:not(.no-margin) {
     margin-top: 30px;
 }
 
@@ -68,7 +68,7 @@ button, a {
     cursor: pointer;
 }
 
-img {
+img:not(.no-margin) {
     margin-left: auto;
     margin-right: auto;
     margin-top: 30px;

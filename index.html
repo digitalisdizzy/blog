@@ -67,6 +67,7 @@
 
                     const a = document.createElement("a")
                     a.className = "post"
+                    a.href = `/blog/${item.path.split(".")[0]}`
                     
                     const h1 = document.createElement("h1")
                     h1.textContent = post.frontMatter.title || item.path.split(".")[0]

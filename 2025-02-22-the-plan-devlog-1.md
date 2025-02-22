@@ -6,9 +6,9 @@ My favourite type of Roblox game is emergency roleplay. Only thing is, I've been
 
 So I'm going to make my own emergency roleplay game, focusing on that balance between gameplay and roleplay. Right now I'm thinking of calling it Renoak County and having the main city be called Willowfield, and I might have one or two smaller towns to make the map a bit bigger. If you have any better ideas for the game/city name, please add them to the comments. I don't want it to be in a state or really anywhere in America, like how Springfield from The Simpsons isn't really set anywhere (unless you count [this film theory episode](https://www.youtube.com/watch?v=S3FtIuVNY8k)), but I do want to base them off of Coloradoan towns (is Coloradoan a word?). These are a couple of pictures showing kind of how I want it to look, quite sunny but also quite mountainous.
 
-![Colorado Springs](/blog/assets/colorado-springs.jpg)
-![Greeley](/blog/assets/greeley.jpg)
-![Golden](/blog/assets/golden.jpg)
+<img src="/blog/assets/colorado-springs.jpg" alt="Colorado Springs" height="700">
+<img src="/blog/assets/Greeley.jpg" alt="Greeley" height="700">
+<img src="/blog/assets/golden.jpg" alt="Golden" height="700">
 
 I don't have a full plan for what features I'll be adding to it, but I've got a few planned. I might change these, but it's what I have in my head right now.
 
@@ -50,9 +50,9 @@ I think this'll be my alternative to menus: phones. You can practically put anyt
 
 I've also made a settings app where you can change between 12h and 24h time or change your background and ringtone. The ringtone doesn't really do anything yet since I haven't made the phone app yet, but it does save.
 
-![Settings app](/blog/assets/phone-settings-app.png)
-![A change background page](/blog/assets/phone-change-background.png)
-![A change ringtone page](/blog/assets/phone-change-ringtone.png)
+<img src="/blog/assets/phone-settings-app.png" alt="A settings page" height="800" style="display: inline;">
+<img src="/blog/assets/phone-change-background.png" alt="A change background page" height="800" style="display: inline;">
+<img src="/blog/assets/phone-change-ringtone.png" alt="A change ringtone page" height="800" style="display: inline;">
 
 I'll also have a phone app where you can call people (over voice chat) or message them, a bank app where you can see your balance, transactions and transfer money, and a camera app where you can take photos using Roblox's [CaptureService](https://create.roblox.com/docs/reference/engine/classes/CaptureService) (which I don't see many other games using).
 

@@ -27,4 +27,5 @@
     white-space: nowrap; /* Prevent wrapping */
     overflow: hidden;
     text-overflow: ellipsis;
+    font-weight: 400;
 }

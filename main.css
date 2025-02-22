@@ -26,6 +26,7 @@ body {
     margin-left: var(--page-margin);
     margin-right: var(--page-margin);
     padding: 50px 0;
+    height: 100%
 }
 
 body::after {

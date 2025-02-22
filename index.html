@@ -65,12 +65,19 @@
                 fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${item.path}`).then(r2 => r2.text().then(raw => {
                     const post = extractFrontMatter(raw)
 
-                    const el = `<a class="post" href="/blog/${item.path.split(".")[0]}">
-            <h1>${post.frontMatter.title || item.path.split(".")[0]}</h1>
-            <p>${post.body}</p>
-        </a>`
+                    const a = document.createElement("a")
+                    a.className = "post"
+                    
+                    const h1 = document.createElement("h1")
+                    h1.textContent = post.frontMatter.title || item.path.split(".")[0]
 
-                    document.getElementById("posts").innerHTML += el
+                    const p = document.createElement("p")
+                    p.textContent = post.body
+
+                    a.appendChild(h1)
+                    a.appendChild(p)
+
+                    document.getElementById("posts").appendChild(a)
                 })).catch(showError)
             });
         })).catch(showError)

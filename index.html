@@ -43,7 +43,7 @@
         const chunk = (arr, size) =>
             Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
                 arr.slice(i * size, i * size + size)
-        );
+            );
 
         function parsePage(content, path) {
             const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
@@ -61,7 +61,7 @@
         function showError(e){
             document.getElementById("posts").innerHTML += `<div class="text-center">
             <h3><b>Error getting posts</b></h3>
-            <i>${e}</i></div class="text-center">`
+            <i>${e}</i></div>`
         }
 
         function displayPosts(posts){
@@ -73,10 +73,10 @@
                 a.href = item.url
                     
                 const h1 = document.createElement("h1")
-                h1.textContent = post.frontMatter.title
+                h1.textContent = item.frontMatter?.title || "Untitled Post"
 
                 const p = document.createElement("p")
-                p.textContent = post.body
+                p.textContent = item.body
 
                 a.appendChild(h1)
                 a.appendChild(p)
@@ -85,21 +85,23 @@
             })
         }
 
-        fetch("https://api.github.com/repos/digitalisdizzy/blog/git/trees/main?recursive=1").then(r => r.json().then(data => {
+        fetch("https://api.github.com/repos/digitalisdizzy/blog/git/trees/main?recursive=1").then(r => r.json().then(async data => {
             const posts = data.tree.filter(item => !item.path.includes("/") && item.path.endsWith(".md"))
             const chunks = chunk(posts, 5)
             const processedPosts = []
 
-            chunks.forEach(item => {
-                item.forEach(post => {
-                    fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${post.path}`).then(r2 => r2.text().then(raw => {
-                        processedPosts.push(parsePage(raw, post.path))
-                    })).catch(console.warn)
-                })
-
-                processedPosts.sort((a, b) => new Date(a.date) - new Date(b.date))
-                displayPosts(processedPosts)
-            })
+            for (const chunk of chunks) {
+                await Promise.all(chunk.map(async (post) => {
+                    try {
+                        const res = await fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/main/${post.path}`);
+                        const raw = await res.text();
+                        processedPosts.push(parsePage(raw, post.path));
+                    } catch (error) {
+                        console.warn(error);
+                    }
+                }));
+                displayPosts(processedPosts);
+            }
         })).catch(showError)
     </script>
 </body>

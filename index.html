@@ -65,6 +65,8 @@
         }
 
         function displayPosts(posts){
+            posts.sort((a, b) => new Date(b.frontMatter.date) - new Date(a.frontMatter.date))
+
             const postsList = document.getElementById("posts")
             postsList.innerHTML = ""
             posts.forEach(item => {
@@ -100,7 +102,6 @@
                         console.warn(error);
                     }
                 }));
-                processedPosts.sort((a, b) => new Date(b.frontMatter.date) - new Date(a.frontMatter.date))
                 displayPosts(processedPosts);
             }
         })).catch(showError)

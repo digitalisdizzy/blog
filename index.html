@@ -40,15 +40,21 @@
         import YAML from 'https://cdn.jsdelivr.net/npm/yaml@2.7/browser/index.js'
         window.YAML = YAML
 
-        function extractFrontMatter(content) {
+        const chunk = (arr, size) =>
+            Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
+                arr.slice(i * size, i * size + size)
+        );
+
+        function parsePage(content, path) {
             const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)/);
             if (!match) {
-                return { frontMatter: null, body: content.trim() };
+                return { frontMatter: null, body: content.trim(), url: `/blog/${path.split(".")[0]}` };
             }
 
             return {
                 frontMatter: YAML.parse(match[1]),
-                body: match[2].trim()
+                body: match[2].trim(),
+                url: `/blog/${path.split(".")[0]}`
             };
         }
 
@@ -58,29 +64,42 @@
             <i>${e}</i></div class="text-center">`
         }
 
-        fetch("https://api.github.com/repos/digitalisdizzy/blog/git/trees/main?recursive=1").then(r => r.json().then(data => {
-            const posts = data.tree.filter(item => !item.path.includes("/") && item.path.endsWith(".md")).sort((a, b) => b.path.localeCompare(a.path))
-
+        function displayPosts(posts){
+            const postsList = document.getElementById("posts")
+            postsList.innerHTML = ""
             posts.forEach(item => {
-                fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${item.path}`).then(r2 => r2.text().then(raw => {
-                    const post = extractFrontMatter(raw)
-
-                    const a = document.createElement("a")
-                    a.className = "post"
-                    a.href = `/blog/${item.path.split(".")[0]}`
+                const a = document.createElement("a")
+                a.className = "post"
+                a.href = item.url
                     
-                    const h1 = document.createElement("h1")
-                    h1.textContent = post.frontMatter.title || item.path.split(".")[0]
+                const h1 = document.createElement("h1")
+                h1.textContent = post.frontMatter.title
 
-                    const p = document.createElement("p")
-                    p.textContent = post.body
+                const p = document.createElement("p")
+                p.textContent = post.body
 
-                    a.appendChild(h1)
-                    a.appendChild(p)
+                a.appendChild(h1)
+                a.appendChild(p)
 
-                    document.getElementById("posts").appendChild(a)
-                })).catch(showError)
-            });
+                postsList.appendChild(a)
+            })
+        }
+
+        fetch("https://api.github.com/repos/digitalisdizzy/blog/git/trees/main?recursive=1").then(r => r.json().then(data => {
+            const posts = data.tree.filter(item => !item.path.includes("/") && item.path.endsWith(".md"))
+            const chunks = chunk(posts, 5)
+            const processedPosts = []
+
+            chunks.forEach(item => {
+                item.forEach(post => {
+                    fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/refs/heads/main/${post.path}`).then(r2 => r2.text().then(raw => {
+                        processedPosts.push(parsePage(raw, post.path))
+                    })).catch(console.warn)
+                })
+
+                processedPosts.sort((a, b) => new Date(a.date) - new Date(b.date))
+                displayPosts(processedPosts)
+            })
         })).catch(showError)
     </script>
 </body>

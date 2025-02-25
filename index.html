@@ -97,7 +97,12 @@
                     try {
                         const res = await fetch(`https://raw.githubusercontent.com/digitalisdizzy/blog/main/${post.path}`);
                         const raw = await res.text();
-                        processedPosts.push(parsePage(raw, post.path));
+
+                        const parsed = parsePage(raw, post.path)
+
+                        if(!parsed.frontMatter.unlisted){
+                            processedPosts.push(parsed);
+                        }
                     } catch (error) {
                         console.warn(error);
                     }

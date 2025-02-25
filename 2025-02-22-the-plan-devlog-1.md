@@ -1,6 +1,7 @@
 ---
 title: 'The Plan - Devlog #1'
 date: 2025-02-22 17:00:00
+unlisted: true
 ---
 My favourite type of Roblox game is emergency roleplay. Only thing is, I've been struggling to find one that has a good balance of gameplay and roleplay. [Emergency Response: Liberty County](https://www.roblox.com/games/2534724415/Emergency-Response-Liberty-County) is what I've been playing for the past couple years because it had a good balance between those two things and was fun, but recently the updates have been slowing and getting smaller, and it's becoming less fun in general.
 
